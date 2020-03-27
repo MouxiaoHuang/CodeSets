@@ -4,7 +4,7 @@ import cv2
 import dlib
 import datetime
 
-
+"""
 def detection(img):
     detector = dlib.get_frontal_face_detector()  # 使用默认的人类识别器模型
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -16,7 +16,20 @@ def detection(img):
         bottom = face.bottom()
         cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0), 2)
     cv2.imshow("image", img)
+"""
 
+
+def detection(img):
+    face_detector = dlib.cnn_face_detection_model_v1('face_detector/mmod_human_face_detector.dat')
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    detected_face = face_detector(gray, 1)
+    face = detected_face[0].rect
+    left = face.left()
+    top = face.top()
+    right = face.right()
+    bottom = face.bottom()
+    cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0), 2)
+    cv2.imshow('image', img)
 
 def main():
     cap = cv2.VideoCapture(0)
