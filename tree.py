@@ -52,6 +52,12 @@ class Tree():
                 if (cur.rchild is not None):
                     queue.append(cur.rchild)
 
+    def maxdepth(self, root):
+        if root==None:
+            return 0
+        else:
+            return 1 + max(self.maxdepth(root.lchild), self.maxdepth(root.rchild))
+
 
 if __name__ == '__main__':
     t = Tree()
@@ -62,3 +68,4 @@ if __name__ == '__main__':
     print("")
     t.bfs(t.root)
     print("")
+    print(t.maxdepth(t.root))
