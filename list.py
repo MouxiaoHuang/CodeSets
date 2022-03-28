@@ -1,6 +1,9 @@
 # ref: https://blog.csdn.net/qq_30815237/article/details/90750349
 
 # 先定一个node的类
+from itertools import count
+
+
 class Node():                  #value + next
     def __init__ (self, value = None, next = None):
         self._value = value
@@ -14,7 +17,7 @@ class Node():                  #value + next
  
     def setValue(self,new_value):
         self._value = new_value
- 
+
     def setNext(self,new_next):
         self._next = new_next
  
@@ -105,3 +108,28 @@ class LinkedList():
                 current = current.getNext()
             pre.setNext(temp)
             temp.setNext(current)
+
+    def length(self):
+        cur = self.head
+        count = 0
+        while cur:
+            cur += 1
+            cur = cur.next
+        return count
+
+    def insert(self, pos, new_val):
+        if pos <= 0:
+            self.add_begin(new_val)
+        elif pos >= self.length():
+            self.add_end(new_val)
+        else:
+            tmp = Node(new_val)
+            count = 0
+            pre = None
+            cur = self.head
+            while count < pos:
+                count += 1
+                pre = cur
+                cur = cur.next
+            pre.next = tmp
+            tmp.next = cur
