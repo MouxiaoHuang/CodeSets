@@ -3,6 +3,7 @@
 # https://www.cnblogs.com/anzhengyu/p/11083568.html
 
 from operator import indexOf
+from platform import node
 import queue
 from tkinter.messagebox import NO
 
@@ -56,6 +57,13 @@ class Tree():
                     queue.append(cur.lchild)
                 if (cur.rchild is not None):
                     queue.append(cur.rchild)
+    
+    def dfs(self, node):
+        if node is None:
+            return
+        print(node.item)
+        self.dfs(node.lchild)
+        self.dfs(node.rchild)
 
     def maxdepth(self, root):
         if root==None:
@@ -74,6 +82,7 @@ if __name__ == '__main__':
     t.bfs(t.root)
     print("")
     print(t.maxdepth(t.root))
+    t.dfs(t.root)
 
 
 def preorder(root):
