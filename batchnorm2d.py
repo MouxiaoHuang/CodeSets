@@ -8,7 +8,6 @@ class BatchNorm2d():
         self.momentum = momentum
         self.running_mu = 0.0
         self.running_var = 1.0
-        pass
     
     def forward_train(self, input):
         '''
