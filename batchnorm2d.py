@@ -11,6 +11,9 @@ class BatchNorm2d():
         pass
     
     def forward_train(self, input):
+        '''
+        input: [bz, c, h, w]
+        '''
         # calculate mean and variance of batch
         mu = input.mean(axis = 0)
         var = input.var(axis = 0)
