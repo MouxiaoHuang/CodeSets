@@ -12,6 +12,7 @@ class BatchNorm2d():
 
     def forward_train(self, input):
         # input is [bz, c, h, w]
+        # 
         self.mean = input.mean(axis = 0)
         self.var = input.var(axis = 0)
         input_norm = (input - self.mean) / (self.var + self.eps)
