@@ -1,4 +1,3 @@
-from turtle import forward, shape
 import numpy as np
 
 # N = (W - F + 2 * P) / S + 1
