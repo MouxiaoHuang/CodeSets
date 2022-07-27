@@ -61,7 +61,8 @@
 
 
 
-from xml.dom import minidom
+from random import random
+from turtle import right
 
 
 def bubblesort(nums):
@@ -119,3 +120,66 @@ def quicksort(nums):
         return nums
     qs(nums, 0, n-1)
     return nums
+
+'''默写
+'''
+def quicksort_randpivot(nums):
+    def partition(nums, low, high):
+        pivot_idx = random.randint(low, high) # 随机选择pivot
+        nums[pivot_idx], nums[low] = nums[low], nums[pivot_idx] # 把pivot放到最左边
+        pivot = nums[low] # 选取最左边为pivot
+
+        left, right = low, high
+        while left < right:
+            while left < right and nums[right] >= pivot: # 找到右边第一个<pivot的元素
+                right -= 1
+            nums[left] = nums[right] # 并将其移动到left处
+            while left < right and nums[left] <= pivot:
+                left += 1
+            nums[right] = nums[left]
+        nums[left] = pivot
+        return left
+    
+    def quicksort(nums, low, high):
+        if low >= high:
+            return
+        mid = partition(nums, low, right) 
+        quicksort(nums, 0, mid - 1)
+        quicksort(nums, mid + 1, high)
+    quicksort(nums, 0, len(nums) - 1)
+    return nums
+
+'''默写
+'''
+def mergesort(nums, low, high):
+    if low >= high:
+        return
+    # divide / conquer
+    # 求中点，分为前后两段，排序
+    mid = low + (high - low) // 2
+    mergesort(nums, low, mid)
+    mergesort(nums, mid + 1, high)
+
+    # combine
+    # 用两个指针指向前后两段
+    left, right = low, mid + 1
+    tmp = []
+    while left <= mid and right <= high:
+        if nums[left] <= nums[right]:
+            tmp.append(nums[left])
+            left += 1
+        else:
+            tmp.append(nums[right])
+            right += 1
+    # 若左 / 右还有剩余，则添加到后面去
+    while left <= mid:
+        tmp.append(nums[left])
+        left += 1
+    while right <= high:
+        tmp.append(nums[right])
+        right += 1
+
+    nums[low:high + 1] = tmp # 对low:high区间排序完了
+    return nums
+
+print('mergesort: ', mergesort(nums, 0, len(nums) - 1))
