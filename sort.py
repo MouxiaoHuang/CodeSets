@@ -183,3 +183,38 @@ def mergesort(nums, low, high):
     return nums
 
 print('mergesort: ', mergesort(nums, 0, len(nums) - 1))
+
+
+'''堆排序，默写
+'''
+def heap_sort(nums):
+    n = len(nums)
+
+    def maxHepify(nums, i, end):
+        j = 2 * i + 1   # j为i的左子节点【建堆时下标0表示堆顶】
+        # 自上而下进行调整
+        while j <= end:
+            # i的左右子节点分别为j和j + 1
+            # 取两者间的较大值
+            if j + 1 <= end and nums[j + 1] > nums[j]:
+                j += 1
+            # 若i指示的元素小于其子节点中的较大者
+            if nums[i] < nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
+                i = j   # 值交换后，往下走：i调整为其子节点j
+                j = 2 * i + 1   # j调整为i的左子节点
+            else:
+                break
+
+    # 建立大顶堆
+    # 从第一个非叶子节点n//2-1开始依次往上进行建堆的调整
+    for i in range(n // 2 - 1, -1, -1):
+        maxHepify(nums, i, n - 1)
+
+    # 排序：依次将堆顶元素（当前最大值）放置到尾部，并调整堆
+    for i in range(n-1, -1, -1):
+        nums[0], nums[i] = nums[i], nums[0]     # 堆顶元素（当前最大值）放置到尾部i
+        maxHepify(nums, 0, i - 1)                 # i - 1变成尾部，并从堆顶0开始调整堆
+    return nums
+
+print('heap_sort: ', heap_sort(nums))        
