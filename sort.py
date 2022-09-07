@@ -61,8 +61,7 @@
 
 
 
-from random import random
-from turtle import right
+import random
 
 
 def bubblesort(nums):
@@ -143,7 +142,7 @@ def quicksort_randpivot(nums):
     def quicksort(nums, low, high):
         if low >= high:
             return
-        mid = partition(nums, low, right) 
+        mid = partition(nums, low, high) 
         quicksort(nums, 0, mid - 1)
         quicksort(nums, mid + 1, high)
     quicksort(nums, 0, len(nums) - 1)
@@ -218,3 +217,40 @@ def heap_sort(nums):
     return nums
 
 print('heap_sort: ', heap_sort(nums))        
+
+
+'''TopK: 基于快排的 partition + quick_select
+'''
+def topk(nums, k):
+    # 第k大 --> 第n - k + 1小（index: n - k）
+    k_idx = len(nums) - k
+
+    def partition(nums, low, high):
+        pivot_idx = random.randint(low, high)
+        nums[pivot_idx], nums[low] = nums[low], nums[pivot_idx]
+        pivot = nums[low]
+
+        left, right = low, high
+        while left < right:
+            while left < right and nums[right] >= pivot:
+                right -= 1
+            nums[left] = nums[right]
+            while left < right and nums[left] <= pivot:
+                left += 1
+            nums[right] = nums[left]
+        nums[left] = pivot
+        return left
+    
+    def quick_select(nums, low, high, k_idx):
+        mid = partition(nums, low, high)
+        if mid == k_idx:
+            return nums[mid]
+        elif mid > k_idx:
+            return quick_select(nums, 0, mid - 1, k_idx)
+        elif mid < k_idx:
+            return quick_select(nums, mid + 1, high, k_idx)
+    
+    return quick_select(nums, 0, len(nums) - 1, k_idx)
+
+k = 4
+print(topk(nums, k))
